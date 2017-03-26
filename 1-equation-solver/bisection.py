@@ -4,10 +4,9 @@ import sys
 def evaluate(point):
     return 3*point + 2
 
-def bisection(lo, hi):
-    eps = 1e-08
+def bisection(lo, hi, tolerance=0.003):
     k = 1
-    while abs(hi - lo) >= eps:
+    while abs(hi - lo) >= tolerance:
         medium = (hi + lo)/2
         if evaluate(lo) * evaluate(medium) <= 0:
             hi = medium
@@ -19,7 +18,11 @@ def bisection(lo, hi):
 
 def main():
     left, right = list(map(int, sys.argv[1:3]))
-    n, lo, hi = bisection(left, right)
+    if len(sys.argv) == 4:
+        tolerance = float(sys.argv[-1])
+        n, lo, hi = bisection(left, right, tolerance)
+    else:
+        n, lo, hi = bisection(left, right)
     print ("After " + str(n) + " iterations, a solution was found in the interval (" + str(lo) + ", " + str(hi) + ")")
 
 if __name__ == '__main__':
