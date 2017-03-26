@@ -17,6 +17,10 @@ def bisection(lo, hi):
 
     return k, lo, hi
 
-if __name__ == '__main__':
+def main():
     left, right = list(map(int, sys.argv[1:3]))
-    print(bisection(left, right))
+    n, lo, hi = bisection(left, right)
+    print ("After " + str(n) + " iterations, a solution was found in the interval (" + str(lo) + ", " + str(hi) + ")")
+
+if __name__ == '__main__':
+    main()
