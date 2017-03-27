@@ -22,7 +22,7 @@ def main():
         n, solution = false_position(left, right, tolerance)
     else:
         n, solution = false_position(left, right)
-
+    n = 2
     print ("After " + str(n) + " iterations, solution"+ str(solution) + " was found\n")
 
 if __name__ == '__main__':
