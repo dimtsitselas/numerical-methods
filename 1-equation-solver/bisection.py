@@ -4,7 +4,7 @@ import sys
 def evaluate(point):
     return 3*point + 2
 
-def bisection(lo, hi, tolerance=0.003):
+def bisection(lo, hi, tolerance=0.001):
     k = 1
     while abs(hi - lo) >= tolerance:
         medium = (hi + lo)/2
