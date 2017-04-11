@@ -57,7 +57,7 @@ class function():
 
         return str(self.var)
 
-    def diff(self, n):
+    def diff(self, n=1):
         """Returns the n-th derivative of the function
         
         params:
