@@ -1,29 +1,42 @@
 import sys
-def f(point):
-    return 3*point + 2
 
-def false_position(lo, hi, tolerance=0.001):
-    k = 1
-    c = 1
+sys.path.append('../../libs/')
+from functiontools import function
+
+def false_position(expr, lo, hi, tolerance=0.001):
+    f = function(expr)
+
+    c, k = 1, 1
     while abs(f(c)) >= tolerance:
+        """Uses false position method to solve the equation: expr = 0"""
         c = (lo * f(hi) - hi * f(lo)) / (f(hi) - f(lo))
+
         if(f(lo) * f(c) <= 0):
             hi = c
         else:
             lo = c
-        k = k + 1
+
+        k += 1
 
     return k, c
 
-def main():
-    left, right = list(map(int, sys.argv[1:3]))
-    if len(sys.argv) == 4:
-        tolerance = float(sys.argv[-1])
-        n, solution = false_position(left, right, tolerance)
-    else:
-        n, solution = false_position(left, right)
+def main(args):
     
-    print ("After " + str(n) + " iterations, solution"+ str(solution) + " was found\n")
+    if len(args) < 4:
+        raise AttributeError("Too few arguments")
+    
+    elif len(args) == 4:
+        expr, left, right = args[1:4]
+        n, sol = false_position(expr, float(left), float(right))
+
+    elif len(sys.args) == 5:
+        tolerance = float(sys.argv[4])
+        n, sol = false_position(epxr, float(left), float(right), float(tolerance))
+
+    else:
+        raise AttributeError("Too many arguments")
+
+    print ("After " + str(n) + " iterations, a solution is approximately " + str(sol))
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv)

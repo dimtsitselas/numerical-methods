@@ -4,6 +4,7 @@ sys.path.append('../../libs/')
 from functiontools import function
 
 def bisection(expr, lo, hi, tolerance=0.001):
+    """Uses bisection method to solve the equation: expr = 0"""
     f = function(expr)
 
     k = 1
