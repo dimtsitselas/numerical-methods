@@ -4,11 +4,11 @@ sys.path.append('../../libs/')
 from functiontools import function
 
 def false_position(expr, lo, hi, tolerance=0.001):
+    """Uses false position method to solve the equation: expr = 0"""    
     f = function(expr)
 
     c, k = 1, 1
     while abs(f(c)) >= tolerance:
-        """Uses false position method to solve the equation: expr = 0"""
         c = (lo * f(hi) - hi * f(lo)) / (f(hi) - f(lo))
 
         if(f(lo) * f(c) <= 0):
@@ -18,7 +18,7 @@ def false_position(expr, lo, hi, tolerance=0.001):
 
         k += 1
 
-    return k, c
+    return c, k
 
 def main(args):
     
@@ -26,12 +26,12 @@ def main(args):
         raise AttributeError("Too few arguments")
     
     elif len(args) == 4:
-        expr, left, right = args[1:4]
-        n, sol = false_position(expr, float(left), float(right))
+        expr, left, right = args[1:]
+        sol, n = false_position(expr, float(left), float(right))
 
     elif len(sys.args) == 5:
-        tolerance = float(sys.argv[4])
-        n, sol = false_position(epxr, float(left), float(right), float(tolerance))
+        expr, left, right, tolerance = float(sys.argv[1:])
+        sol, n = false_position(epxr, float(left), float(right), float(tolerance))
 
     else:
         raise AttributeError("Too many arguments")

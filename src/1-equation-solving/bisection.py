@@ -18,7 +18,7 @@ def bisection(expr, lo, hi, tolerance=0.001):
         
         k += 1
 
-    return k, lo, hi
+    return lo, hi, k
 
 def main(args):
 
@@ -26,12 +26,12 @@ def main(args):
         raise AttributeError("Too few arguments")
     
     elif len(args) == 4:
-        expr, left, right = args[1:4]
-        n, lo, hi = bisection(expr, float(left), float(right))
+        expr, left, right = args[1:]
+        lo, hi, n = bisection(expr, float(left), float(right))
 
     elif len(sys.args) == 5:
-        tolerance = float(sys.argv[4])
-        n, lo, hi = bisection(epxr, float(left), float(right), float(tolerance))
+        expr, left, right, tolerance = float(sys.argv[1:])      
+        lo, hi, n = bisection(epxr, float(left), float(right), float(tolerance))
 
     else:
         raise AttributeError("Too many arguments")
