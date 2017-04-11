@@ -38,15 +38,7 @@ class function():
 
         return str(self.expr)
 
-    def getSymbol(self):
-        """Returns the symbols involved in the function as a character
-
-        E.g. f = function("x**2 + log(x)"); f.getSymbol() # returns 'x' 
-        """
-
-        return str(self.var)
-
-    def eval(self, value):
+    def __call__(self, value):
         """Evaluates the function at a given point.
         
         params:
@@ -56,6 +48,14 @@ class function():
         """
 
         return self.expr.evalf(subs={self.var: value})
+
+    def getSymbol(self):
+        """Returns the symbols involved in the function as a character
+
+        E.g. f = function("x**2 + log(x)"); f.getSymbol() # returns 'x' 
+        """
+
+        return str(self.var)
 
     def diff(self, n):
         """Returns the n-th derivative of the function
