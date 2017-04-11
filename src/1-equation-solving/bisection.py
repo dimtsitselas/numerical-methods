@@ -18,7 +18,7 @@ def bisection(expr, lo, hi, tolerance=0.001):
         
         k += 1
 
-    return lo, hi, k
+    return lo, hi, k # (lower bound, higher bound, iterations)
 
 def main(args):
 
