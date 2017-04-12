@@ -18,7 +18,7 @@ def false_position(expr, lo, hi, tolerance=0.001):
 
         k += 1
 
-    return c, k
+    return c, k # (solution, iterations)
 
 def main(args):
     

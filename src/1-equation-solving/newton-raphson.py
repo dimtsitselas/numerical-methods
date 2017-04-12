@@ -10,15 +10,15 @@ def newton_raphson(expr, point=0, tolerance=0.001):
 
     k=0
     while True:
+        k += 1        
         newPoint = point - f(point)/derivative(point)
-
-        k = k + 1
+        
         if abs(newPoint - point) < tolerance:
             break
         else:
             point = newPoint
         
-    return point, k  
+    return point, k # (solution, iterations)
 
 def main(args):
     
