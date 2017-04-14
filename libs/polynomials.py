@@ -52,7 +52,7 @@ class CenterPolynomial():
             coeffs (list): list of coefficients
             center (int): center of the polynomial
 
-        e.g. p = ExponetialPolynomial([1, 2, 1], 3) # p = 1 + 2*(x-3) + (x-3)^2
+        e.g. p = CenterPolynomial([1, 2, 1], 3) # p = 1 + 2*(x-3) + (x-3)^2
         """
 
         self.degree = len(coeffs)-1
@@ -88,7 +88,7 @@ class NewtonPolynomial():
             coeffs (list): list of coefficients
             centers (list): centers of the polynomial
 
-        e.g. p = ExponetialPolynomial([1, 2, 1], [3, -7])
+        e.g. p = NewtonPolynomial([1, 2, 1], [3, -7])
         # p = 1 + 2*(x-3) + (x-3)(x+7)
         """
 
@@ -124,7 +124,7 @@ class _LagrangePolynomials():
         args:
             points (list): list of points (reals)
 
-        e.g. p = ExponetialPolynomial([1, 2, 5])
+        e.g. p = _LagrangePolynomials([1, 2, 5])
         # L1 = (x-1)/(2-1) * (x-5)/(2-5)
         """
         self.degree = len(points)-1
@@ -166,7 +166,7 @@ class LagrangePolynomial():
             coeffs (list): list of coefficients (reals)
             points (list): list of points (reals)
 
-        e.g. p = ExponetialPolynomial([3, 2, 7], [1, 2, 5])
+        e.g. p = LagrangePolynomial([3, 2, 7], [1, 2, 5])
         # p = 3*l0(x) + 2*l1(x) + 7*l2(x)
         """
         self.degree = len(points)-1
