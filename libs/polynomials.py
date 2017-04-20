@@ -151,6 +151,26 @@ class _LagrangePolynomials():
         
         return numerator/self.denominator[j]
 
+    def strList(self):
+        """
+        Returns a list of strings each containing one of the Lagrange Polynomials
+
+        (e.g. ['(x-2)(x-3)/2', '(x-1)(x-3)/-1', '(x-1)(x-2)/2'])
+        """
+
+        lp = []
+        for i in range(self.degree+1):
+            tmpStr = ''
+
+            for j in range(self.degree+1):
+                if i != j:
+                    tmpStr += '(x-' + str(self.point[j]) + ')'
+
+            tmpStr += '/' + str(self.denominator[i])
+            lp.append(tmpStr)
+
+        return lp
+
 
 class LagrangePolynomial():
     """Lagrange Polynomial form.
@@ -181,3 +201,7 @@ class LagrangePolynomial():
             value += self.coeffs[i]*self.l(i, point)
 
         return value
+
+if __name__ == "__main__":
+    LP = _LagrangePolynomials([1, 2, 3])
+    print(LP.strList())
