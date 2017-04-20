@@ -62,8 +62,3 @@ class Interpolator():
         """Returns the interpolation polynomial in string form"""
 
         return str(self.NP)
-
-    
-if __name__ == "__main__":
-    it = Interpolator([0, 1, 2, 4], [1, 1, 2, 5])
-    print str(it)

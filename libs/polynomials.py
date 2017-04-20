@@ -243,8 +243,3 @@ class LagrangePolynomial():
         """Returns current polynomial as a string (in exponetial form)"""
 
         return str(self.expr)
-
-
-if __name__ == "__main__":
-    NP = NewtonPolynomial([1, 2, 3], [1, 2, 3])
-    print(str(NP))
