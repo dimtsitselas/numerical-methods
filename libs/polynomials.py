@@ -5,6 +5,10 @@ This module has classes for some elementary polynomial representations such as
 exponential form, center form, newton form, and lagrange form.
 """
 
+from sympy import poly
+from sympy.abc import x
+from sympy.parsing.sympy_parser import parse_expr
+
 class ExponetialPolynomial():
     """Polynomial of exponential form
 
@@ -22,6 +26,7 @@ class ExponetialPolynomial():
 
         self.degree = len(coeffs)-1
         self.coeffs = coeffs
+        
 
     def __call__(self, point):
         """Returns the value at the given point
@@ -171,13 +176,27 @@ class LagrangePolynomial():
         """
         self.degree = len(points)-1
         self.coeffs = coeffs
-        self.l = _LagrangePolynomials(points)        
+        self.l = _LagrangePolynomials(points)
+        self.expr = _evaluate()
+
+    def _evaluate(self):
+        polynomial = 0
+
+        for i in range(len(self.l)):
+            polynomial += coeff[i] * parse_expr(self.l.strList()[i])
+
+        return polynomial
 
     def __call__(self, point):
         """Returns the value of the polynomial at the given point"""
-        value = 0
+        
+        return self.expr.evalf(subs={x: point})
 
-        for i in range(self.degree+1):
-            value += self.coeffs[i]*self.l(i, point)
+    def __str__(self):
+        return str(self.expr)
 
-        return value
+
+if __name__ == '__main__':
+    a = parse_expr("2*x")
+    a = a * 2
+    print(str(a))
