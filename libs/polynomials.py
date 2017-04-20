@@ -187,19 +187,19 @@ class LagrangePolynomial():
             a0*l0(x) + a1*l1(x) + ... + an*ln(x)
     """
 
-    def __init__(self, coeffs, points):
+    def __init__(self, ys, xs):
         """Initialization of the lagrange polynomial.
 
         args:
-            coeffs (list): list of coefficients (reals)
-            points (list): list of points (reals)
+            ys (list): y values of points (reals)
+            xs (list): x values of points (reals)
 
         e.g. p = LagrangePolynomial([3, 2, 7], [1, 2, 5])
         # p = 3*l0(x) + 2*l1(x) + 7*l2(x)
         """
-        self.degree = len(points)-1
-        self.coeffs = coeffs
-        self.l = _LagrangePolynomials(points)
+        self.degree = len(xs)-1
+        self.y = ys
+        self.l = _LagrangePolynomials(xs)
         self.expr = self._evaluatePoly()
 
     def _evaluatePoly(self):
@@ -207,7 +207,7 @@ class LagrangePolynomial():
         strList = self.l.strList()
 
         for i in range(len(strList)):
-            polynomial = polynomial + self.coeffs[i] * parse_expr(strList[i]) 
+            polynomial = polynomial + self.y[i] * parse_expr(strList[i]) 
 
         return polynomial.expand(basic=True)
 
