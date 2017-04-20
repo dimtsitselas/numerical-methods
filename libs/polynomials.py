@@ -156,6 +156,29 @@ class _LagrangePolynomials():
         
         return numerator/self.denominator[j]
 
+    def strList(self):
+        """
+        Returns a list of strings each containing one of the Lagrange Polynomials
+
+        (e.g. ['(x-2)(x-3)/2', '(x-1)(x-3)/-1', '(x-1)(x-2)/2'])
+        """
+
+        lp = []
+        for i in range(self.degree+1):
+            tmpStr = ''
+
+            for j in range(self.degree+1):
+                if i != j:
+                    if self.point[j] > 0:
+                        tmpStr += '(x-' + str(abs(self.point[j])) + ')*'
+                    else:
+                        tmpStr += '(x+' + str(abs(self.point[j])) + ')*'
+
+            tmpStr += '1/' + str(self.denominator[i])
+            lp.append(tmpStr)
+
+        return lp
+
 
 class LagrangePolynomial():
     """Lagrange Polynomial form.
@@ -177,15 +200,16 @@ class LagrangePolynomial():
         self.degree = len(points)-1
         self.coeffs = coeffs
         self.l = _LagrangePolynomials(points)
-        self.expr = _evaluate()
+        self.expr = self._evaluatePoly()
 
-    def _evaluate(self):
+    def _evaluatePoly(self):
         polynomial = 0
+        strList = self.l.strList()
 
-        for i in range(len(self.l)):
-            polynomial += coeff[i] * parse_expr(self.l.strList()[i])
+        for i in range(len(strList)):
+            polynomial = polynomial + self.coeffs[i] * parse_expr(strList[i]) 
 
-        return polynomial
+        return polynomial.expand(basic=True)
 
     def __call__(self, point):
         """Returns the value of the polynomial at the given point"""
@@ -194,9 +218,3 @@ class LagrangePolynomial():
 
     def __str__(self):
         return str(self.expr)
-
-
-if __name__ == '__main__':
-    a = parse_expr("2*x")
-    a = a * 2
-    print(str(a))
