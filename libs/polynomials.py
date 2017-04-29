@@ -123,7 +123,7 @@ class NewtonPolynomial():
 
         for i in range(self.degree):
             # summand: Contains just one summand a time
-            if self.center > 0:
+            if self.center[i] > 0:
                 summand += '(x-' + str(abs(self.center[i])) + ')*'
             else:
                 summand += '(x+' + str(abs(self.center[i])) + ')*'
@@ -229,7 +229,7 @@ class LagrangePolynomial():
         polynomial = 0
         lagrangePoly = self.l.strList()
 
-        for i in range(len(strList)):
+        for i in range(len(lagrangePoly)):
             polynomial = polynomial + self.y[i] * parse_expr(lagrangePoly[i]) 
 
         return polynomial.expand(basic=True)
