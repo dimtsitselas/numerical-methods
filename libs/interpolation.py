@@ -34,6 +34,33 @@ class Interpolator():
 
         # It's our interpolation polynomial
         self.NP = self._buildPoly()
+
+    def __str__(self):
+        """Returns the interpolation polynomial in string form"""
+
+        return str(self.NP)
+
+    def update(self, point):
+        self.x.append(point[0])
+        self.y.append(point[1])
+        self.n += 1
+
+        # Extend existing rows
+        for row in self.table:
+            row.extend([0])
+        
+        # Add new row for the new point
+        self.table.extend([[0 for y in range(self.n)]])
+
+        # Necessary initialization
+        self.table[-1][0] = self.y[-1]
+
+        # Fill table
+        for c in range(1, self.n):
+            self.table[-1][c] = (self.table[-1][c-1] - self.table[-2][c-1])/float((self.x[-1] - self.x[-c-1]))
+
+        # Update Polynomial
+        self.NP = self._buildPoly()
     
     def _initTable(self):
         """Complete the table of divided differences"""
@@ -57,8 +84,3 @@ class Interpolator():
         NP = NewtonPolynomial(coeffs, self.x)
 
         return NP
-
-    def __str__(self):
-        """Returns the interpolation polynomial in string form"""
-
-        return str(self.NP)
