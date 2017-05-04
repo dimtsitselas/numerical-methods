@@ -5,8 +5,6 @@ This module has classes for some elementary polynomial representations such as
 exponential form, center form, newton form, and lagrange form.
 """
 
-from sympy import poly
-from sympy.abc import x
 from sympy.parsing.sympy_parser import parse_expr
 
 class ExponetialPolynomial():
@@ -94,7 +92,7 @@ class NewtonPolynomial():
             centers (list): centers of the polynomial
 
         e.g. p = NewtonPolynomial([1, 2, 1], [3, -7])
-        # p = 1 + 2*(x-3) + (x-3)(x+7)
+        # p = 1 + 2*(x-3) + (x-3)*(x+7)
         """
 
         self.degree = len(coeffs)-1
@@ -113,6 +111,34 @@ class NewtonPolynomial():
             value = value*(point-self.center[i]) + self.coeffs[i]
 
         return value
+
+    def __str__(self):
+        """Returns the polynomial as a string
+
+        e.g. '1 + (x-1)*2 + (x-1)*(x-2)*3'
+        """
+
+        summand = ''
+        polynomial = str(self.coeffs[0])
+
+        for i in range(self.degree):
+            # summand: Contains just one summand a time
+            if self.center[i] > 0:
+                summand += '(x-' + str(abs(self.center[i])) + ')*'
+            else:
+                summand += '(x+' + str(abs(self.center[i])) + ')*'
+
+            # polynomial: Contains the whole polynomial
+            if self.coeffs[i+1] > 0:
+                polynomial += ' + ' + summand + str(self.coeffs[i+1])
+            else:
+                polynomial += ' + ' + summand + '(' + str(self.coeffs[i+1]) + ')'
+
+        # Converting to exponetial form
+        poly = parse_expr(polynomial)
+        polynomial = str(poly.simplify())
+
+        return polynomial
 
 
 class _LagrangePolynomials():
@@ -165,17 +191,17 @@ class _LagrangePolynomials():
 
         lp = []
         for i in range(self.degree+1):
-            tmpStr = ''
+            poly = ''
 
             for j in range(self.degree+1):
                 if i != j:
                     if self.point[j] > 0:
-                        tmpStr += '(x-' + str(abs(self.point[j])) + ')*'
+                        poly += '(x-' + str(abs(self.point[j])) + ')*'
                     else:
-                        tmpStr += '(x+' + str(abs(self.point[j])) + ')*'
+                        poly += '(x+' + str(abs(self.point[j])) + ')*'
 
-            tmpStr += '1/' + str(self.denominator[i])
-            lp.append(tmpStr)
+            poly += '1/' + str(self.denominator[i])
+            lp.append(poly)
 
         return lp
 
@@ -193,21 +219,18 @@ class LagrangePolynomial():
         args:
             ys (list): y values of points (reals)
             xs (list): x values of points (reals)
-
-        e.g. p = LagrangePolynomial([3, 2, 7], [1, 2, 5])
-        # p = 3*l0(x) + 2*l1(x) + 7*l2(x)
         """
         self.degree = len(xs)-1
         self.y = ys
-        self.l = _LagrangePolynomials(xs)
-        self.expr = self._evaluatePoly()
+        self.l = _LagrangePolynomials(xs)   # Lagrange Polynomials
+        self.expr = self._evaluatePoly()    # Evaluate this polynomial
 
     def _evaluatePoly(self):
         polynomial = 0
-        strList = self.l.strList()
+        lagrangePoly = self.l.strList()
 
-        for i in range(len(strList)):
-            polynomial = polynomial + self.y[i] * parse_expr(strList[i]) 
+        for i in range(len(lagrangePoly)):
+            polynomial = polynomial + self.y[i] * parse_expr(lagrangePoly[i]) 
 
         return polynomial.expand(basic=True)
 
@@ -217,4 +240,6 @@ class LagrangePolynomial():
         return self.expr.evalf(subs={x: point})
 
     def __str__(self):
+        """Returns current polynomial as a string (in exponetial form)"""
+
         return str(self.expr)
