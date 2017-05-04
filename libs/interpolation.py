@@ -40,7 +40,14 @@ class Interpolator():
 
         return str(self.NP)
 
+    
     def update(self, point):
+        """Method to add new point to the existing polynomial
+        
+        point:
+            list of two elements containing the x and y coordinate of the new point
+
+        """
         self.x.append(point[0])
         self.y.append(point[1])
         self.n += 1
