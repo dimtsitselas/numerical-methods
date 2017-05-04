@@ -1,3 +1,11 @@
+"""
+This file implements the divided difference method 
+used in interpolating a polymial given some of its points
+The user is first asked to give the x coordinates (points)
+of these points and then the y coordinates (values)
+Afted finding the requested polynomial the user has the option
+to add new points.
+""" 
 import sys
 
 sys.path.append('../../libs/')
