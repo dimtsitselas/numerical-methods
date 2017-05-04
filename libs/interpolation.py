@@ -1,4 +1,4 @@
-class Regressor():
+class Interpolator():
 
     def __init__(self, points, values):
         self.n = len(points)
