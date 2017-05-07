@@ -25,7 +25,7 @@ if __name__ == "__main__":
     f = function(expr)
 
     # Simson rule requires that interval is separated in 2*n equal intervals
-    dx, y = get_interval_points(2*n + 1, f, intLimits)
+    dx, y = get_interval_points(2*n, f, intLimits)
     
     print(simson(2*dx, y))
     print("Biggest error of the above intergation has absolute value of: " + str(err(f, 2*dx, intLimits)))
