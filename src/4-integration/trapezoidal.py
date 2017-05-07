@@ -2,7 +2,7 @@ import sys
 
 sys.path.append('../../libs/')
 from functiontools import function
-from integralutil import get_interval_points
+from integralutil import *
 
 def trapezodial(dx, fs):
 
@@ -13,6 +13,11 @@ def trapezodial(dx, fs):
     integral *= dx/2
     return integral
 
+def err(func, dx, interval):
+
+    a, b = interval[:]
+    return dx**2/12 * (b - a) * funcMax(func.diff(2), interval)
+
 if __name__ == "__main__":
     n = int(input("Enter n: "))
     intLimits = [float(x) for x in input("Please enter integration limits: ").split(' ')]
@@ -20,6 +25,7 @@ if __name__ == "__main__":
 
     f = function(expr)
 
-    dx, y = get_interval_points(n + 1, f, intLimits)
+    dx, y = get_interval_points(n , f, intLimits)
 
     print("Calculating ...\n" + str(trapezodial(dx, y)))
+    print("Biggest error of the above intergation has absolute value of: " + str(err(f, dx, intLimits)))
