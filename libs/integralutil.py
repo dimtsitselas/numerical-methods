@@ -33,7 +33,7 @@ def get_interval_points(n, func, interval):
 
     # xs contains the points on which we separate the interval
     # and fs the value of f at these points
-    xs = [a + i * dx for i in range(n)]
+    xs = [a + i * dx for i in range(n + 1)]
     fs = [func(x) for x in xs]
 
     return dx, fs
