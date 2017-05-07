@@ -4,13 +4,13 @@ sys.path.append('../../libs/')
 from functiontools import function
 from integralutil import get_interval_points
 
-def rectangular(dx, fs):
+def trapezodial(dx, fs):
 
     integral = 0.0
-    for y in fs:
-        integral+=y
+    for i in range(0, n):
+        integral += fs[i] + fs[i+1]
     
-    integral *= dx
+    integral *= dx/2
     return integral
 
 if __name__ == "__main__":
@@ -20,7 +20,6 @@ if __name__ == "__main__":
 
     f = function(expr)
 
-    dx, y = get_interval_points(n, f, intLimits)
-    
+    dx, y = get_interval_points(n + 1, f, intLimits)
 
-    print(rectangular(dx, y))
+    print("Calculating ...\n" + str(trapezodial(dx, y)))
