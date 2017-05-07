@@ -1,4 +1,7 @@
 from functiontools import function
+from sympy.solvers import solve
+from math import inf
+
 
 def get_interval_points(n, func, interval):
     """
@@ -34,3 +37,51 @@ def get_interval_points(n, func, interval):
     fs = [func(x) for x in xs]
 
     return dx, fs
+
+
+def funcMax(func, interval):
+    """
+    Function that returns the maximum of a function in an interval
+
+    func:
+        The function whose the maximum we are searching for. Fucntion is an insance
+        of function class that is implemented in functiontools.py
+    interval:
+        The interval in which we want to find the maximum
+        Interval should be a list of two floats
+    """
+
+    if len(interval) != 2:
+        raise ValueError("interval must have only two elements, i.e. [3, 3.5]")
+    a, b = interval[:]
+    if(b < a):
+        a, b = b, a
+    elif a == b:
+        raise ValueError("An interval must consist of two different numbers")
+
+    # First and second derivatives of func
+    firstder = func.diff()
+    secondder = func.diff(2)
+
+    """
+    To find the global maximum of func in interval we first solve df/dx = 0
+    Then we check if the second derivative is negative on these points, which
+    is the condition for checking for local maximum. Of these local maxima
+    and the values of func at a and b we want the one that is bigger
+    """
+    solutionsExpr = solve(firstder)
+    solutions = list(map(lambda x: x.evalf(), solutionsExpr))
+
+    maxOfFunc = max(func(a), func(b))
+    for point in solutions:
+        if secondder(point) < 0:
+            # we have a local maximum
+            maxOfFunc = max(func(point), maxOfFunc)
+    
+    return maxOfFunc
+
+if __name__ == "__main__":
+    expr = input("Enter a function: ")
+    f = function(expr)
+
+    print(funcMax(f, [-10, 10]))
