@@ -61,6 +61,12 @@ def funcMax(func, interval):
 
     # First and second derivatives of func
     firstder = func.diff()
+    if firstder.isConstant():
+        # Func is a first degree polynomial and its derivative is constant
+        # Sympy can't handle devitives of a constant function. If func has
+        # a positive slope then we should return func(b), else we should
+        # return func(a)
+        return max(func(a), func(b))
     secondder = func.diff(2)
 
     """
@@ -83,5 +89,5 @@ def funcMax(func, interval):
 if __name__ == "__main__":
     expr = input("Enter a function: ")
     f = function(expr)
-
+    
     print(funcMax(f, [-10, 10]))

@@ -49,6 +49,15 @@ class function():
 
         return self.expr.evalf(subs={self.var: value})
 
+    def isConstant(self):
+        """
+        Returns true is function is a constant, i.e. f(x) = 1
+        """
+
+        if self.expr.is_constant():
+            return true
+        return false
+
     def getSymbol(self):
         """Returns the symbols involved in the function as a character
 
@@ -69,6 +78,13 @@ class function():
         if n <= 0 or type(n) != int:
             raise AttributeError("Invalid parameter n")
 
+        """ If function is constant then we should return zero manually
+        because sympy cant handle differentiation of constant functions """
+        if self.isConstant():
+            return function(str("0"))
         newExpr = diff(self.expr, self.var, n)
 
         return function(str(newExpr))
+
+if __name__ == "__main__":
+    print(str(function("0").diff(4)))
