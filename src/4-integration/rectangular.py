@@ -4,7 +4,6 @@ sys.path.append('../../libs/')
 from functiontools import function
 from integralutil import get_interval_points
 
-
 if __name__ == "__main__":
     n = int(input("Enter n: "))
     intLimits = [float(x) for x in input("Please enter integration limits: ").split(' ')]

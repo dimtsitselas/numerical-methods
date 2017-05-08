@@ -7,4 +7,4 @@ def get_interval_points(n, func, interval):
     xs = [a + dx for i in range(n)]
     fs = [f(x) for x in xs]
 
-    return xs, fs 
+    return xs, fs
