@@ -86,12 +86,8 @@ def funcMax(func, interval):
     
     return maxOfFunc
 
-<<<<<<< HEAD
-    return xs, fs
-=======
 if __name__ == "__main__":
     expr = input("Enter a function: ")
     f = function(expr)
     
     print(funcMax(f, [-10, 10]))
->>>>>>> upstream/master
