@@ -4,19 +4,19 @@ sys.path.append('../../libs/')
 from functiontools import function
 from integralutil import *
 
-def rectangular(dx, fs):
+def trapezodial(dx, fs):
 
     integral = 0.0
-    for y in fs:
-        integral+=y
+    for i in range(0, n):
+        integral += fs[i] + fs[i+1]
     
-    integral *= dx
+    integral *= dx/2
     return integral
 
 def err(func, dx, interval):
-    
+
     a, b = interval[:]
-    return dx/2 * (b - a) * funcMax(func.diff(), interval)
+    return dx**2/12 * (b - a) * funcMax(func.diff(2), interval)
 
 if __name__ == "__main__":
     n = int(input("Enter n: "))
@@ -25,8 +25,7 @@ if __name__ == "__main__":
 
     f = function(expr)
 
-    dx, y = get_interval_points(n - 1, f, intLimits)
-    
+    dx, y = get_interval_points(n , f, intLimits)
 
-    print(rectangular(dx, y))
+    print("Calculating ...\n" + str(trapezodial(dx, y)))
     print("Biggest error of the above intergation has absolute value of: " + str(err(f, dx, intLimits)))
