@@ -4,29 +4,30 @@ sys.path.append('../../libs/')
 from functiontools import function
 from integralutil import *
 
-def rectangular(dx, fs):
-
+def rectangular(expr, interval, N):
+    func = function(expr)
+    dx, fs = getIntervalPoints(N, func, interval)
+    
+    # Integral computation
     integral = 0.0
-    for y in fs:
-        integral+=y
-    
+    for i in range(N):
+        integral += fs[i] 
     integral *= dx
-    return integral
 
-def err(func, dx, interval):
-    
+    return integral, maxErr(func, dx, interval)
+
+def maxErr(func, dx, interval):
     a, b = interval[:]
-    return dx/2 * (b - a) * funcMax(func.diff(), interval)
+
+    return dx / 2 * (b - a) * abs(funcMax(func.diff(), interval))
 
 if __name__ == "__main__":
-    n = int(input("Enter n: "))
-    intLimits = [float(x) for x in input("Please enter integration limits: ").split(' ')]
-    expr = input("Please give the function to be integrated: ")
-
-    f = function(expr)
-
-    dx, y = get_interval_points(n - 1, f, intLimits)
     
+    expr = input("Please give the function to be integrated: ")
+    intLimits = [float(x) for x in input("Please enter integration limits: ").split(' ')]    
+    n = int(input("Enter n: "))    
 
-    print(rectangular(dx, y))
-    print("Biggest error of the above intergation has absolute value of: " + str(err(f, dx, intLimits)))
+    I, error = rectangular(expr, intLimits, n)
+
+    print("Integral is: " + str(I))
+    print("Max error of the above intergation has absolute value of: " + str(error))
