@@ -40,6 +40,10 @@ class Interpolator():
 
         return str(self.NP)
 
+    def getCoeffs(self):
+        """Returns the coefficients of the polynomial"""
+        
+        return [self.table[i][i] for i in range(self.n)]
     
     def update(self, point):
         """Method to add new point to the existing polynomial
